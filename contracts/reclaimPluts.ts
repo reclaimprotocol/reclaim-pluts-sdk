@@ -1,14 +1,8 @@
 import { Address, bs, PScriptContext, PaymentCredentials, Script, bool, compile, makeValidator, pfn, pstruct, str, palias, psha3_256} from "@harmoniclabs/plu-ts";
 
 
-export const Redeemer = pstruct({
-    SignedClaim: {
-        signatures: str,
-        parameters: str,
-    }
-})
-
 export const Datum = palias(bs)
+export const Redeemer = palias(bs)
 
 const reclaimPluts = pfn([
     Datum.type,
@@ -16,8 +10,7 @@ const reclaimPluts = pfn([
     PScriptContext.type
 ],  bool)
 (( datum, redeemer, ctx ) => {
-    const amplifiedData = redeemer.signatures.concat(redeemer.parameters).utf8Encoded.toString();
-    return psha3_256.$(amplifiedData).eq( datum );
+    return redeemer.eq( datum );
 });
 
 

@@ -1,11 +1,13 @@
 import { BrowserWallet } from "@meshsdk/core";
 import getTxBuilder from "./getTxBuilder";
-import { Address, isData, Data, DataB, Tx, DataMap, DataConstr, DataPair } from "@harmoniclabs/plu-ts";
+import { Address, isData, Data, DataB, Tx, DataMap, DataConstr, DataPair, data } from "@harmoniclabs/plu-ts";
 import { script, scriptTestnetAddr } from "../../contracts/reclaimPluts";
 import { koios } from "./koios";
 import { fromAscii, uint8ArrayEq } from "@harmoniclabs/uint8array-utils";
 import { toPlutsUtxo } from "./mesh-utils";
 import { Proof, Reclaim } from "@reclaimprotocol/js-sdk";
+import {  sha3 } from "@harmoniclabs/crypto";
+import { toHexString } from "./utils";
 
 
 function buildRedemeer(signatures: string, parameters: string){
@@ -72,7 +74,7 @@ async function getUnlockTx( wallet: BrowserWallet, reclaimProof: Proof ): Promis
                 inputScript: {
                     script,
                     datum: "inline", // the datum is present already on `utxoToSpend`
-                    redeemer: buildRedemeer(reclaimProof.signatures[0], reclaimProof.claimData.parameters)
+                    redeemer: new DataB(new TextEncoder().encode(toHexString(sha3(datumBytes))))
                 }
             }
         ],

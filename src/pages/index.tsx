@@ -6,11 +6,16 @@ import ConnectionHandler from "@/components/ConnectionHandler";
 import { lockTx } from "@/offchain/lockTx";
 import { unlockTx } from "@/offchain/unlockTx";
 import { Proof } from "@reclaimprotocol/js-sdk";
+import { CreateNewProof } from "@/components/CreateNewProof";
+import { useState } from "react";
 
 export default function Home() {
     const { wallet, connected } = useWallet();
     const network = useNetwork();
     const toast = useToast();
+
+    const [newProof, setNewProof] = useState<Proof>();
+    const [readyToVerify, setReadyToVerify] = useState(false);
 
     if (typeof network === "number" && network !== 0) {
         return (
@@ -54,7 +59,14 @@ export default function Home() {
 
 
     function onLock() {
-        lockTx(wallet, mockProof)
+        if (!newProof) {
+            toast({
+                title: `no proof to lock`,
+                status: "error"
+            });
+            return;
+        }
+        lockTx(wallet, newProof)
             // lock transaction created successfully
             .then(txHash => toast({
                 title: `lock tx submitted: https://preprod.cardanoscan.io/transaction/${txHash}`,
@@ -71,7 +83,14 @@ export default function Home() {
     }
 
     function onUnlock() {
-        unlockTx(wallet, mockProof)
+        if (!newProof) {
+            toast({
+                title: `no proof to unlock`,
+                status: "error"
+            });
+            return;
+        }
+        unlockTx(wallet, newProof)
             // unlock transaction created successfully
             .then(txHash => toast({
                 title: `unlock tx submitted: https://preprod.cardanoscan.io/transaction/${txHash}`,
@@ -96,8 +115,15 @@ export default function Home() {
             {
                 connected &&
                 <>
-                    <Button onClick={onLock} >Lock 10 tADA</Button>
-                    <Button onClick={onUnlock} >Unlock</Button>
+                    {!readyToVerify && <CreateNewProof setNewProof={setNewProof} setReadyToVerify={setReadyToVerify} />}
+                    {readyToVerify &&
+                        (
+                            <>
+                                <Button onClick={onLock} >Lock Your Proof</Button>
+                                <Button onClick={onUnlock} >Unlock (Prove)</Button>
+                            </>
+                        )
+                    }
                 </>
             }
         </div>

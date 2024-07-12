@@ -1,17 +1,13 @@
 import { BrowserWallet } from "@meshsdk/core";
 import getTxBuilder from "./getTxBuilder";
 import { scriptTestnetAddr } from "../../contracts/reclaimPluts";
-import { Value, DataB, Address, Tx } from "@harmoniclabs/plu-ts";
+import { Value, DataB, Data, Address, Tx, ByteString, hashData } from "@harmoniclabs/plu-ts";
 import { toPlutsUtxo } from "./mesh-utils";
 import koios from "./koios";
-import {Proof, Reclaim} from "@reclaimprotocol/js-sdk"
-import {  sha3 , byte} from "@harmoniclabs/plu-ts/dist/crypto";
+import {Proof} from "@reclaimprotocol/js-sdk"
+import {  sha3 } from "@harmoniclabs/crypto";
+import { toHexString } from './utils'
 
-function toHexString(byteArray: byte[]) {
-  return Array.from(byteArray, function(byte) {
-    return ('0' + (byte & 0xFF).toString(16)).slice(-2);
-  }).join('')
-}
 
 async function getLockTx( wallet: BrowserWallet, reclaimProof: Proof ): Promise<Tx>
 {
@@ -51,8 +47,6 @@ async function getLockTx( wallet: BrowserWallet, reclaimProof: Proof ): Promise<
                 value: Value.lovelaces( 10_000_000 ),
                 // remeber to include a datum
                 datum: new DataB(
-                    // remember we set the datum to be the public key hash?
-                    // we can extract it from the address as follows
                     new TextEncoder().encode(toHexString(sha3(datumBytes)))
                 )
             }

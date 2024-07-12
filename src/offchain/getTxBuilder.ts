@@ -17,7 +17,6 @@ export default async function getTxBuilder(): Promise<TxBuilder>
         try {
             // just in kase koios returns protocol paramters that don't look good
             _cachedTxBuilder = new TxBuilder(
-                "testnet",
                 pp
             );
         }
@@ -26,7 +25,6 @@ export default async function getTxBuilder(): Promise<TxBuilder>
             // !!! IMPORTANT !!! use only as fallback;
             // parameters might (and will) change from the real world
             _cachedTxBuilder = new TxBuilder(
-                "testnet",
                 defaultProtocolParameters
             );
         }

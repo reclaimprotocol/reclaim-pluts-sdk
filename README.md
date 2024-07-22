@@ -4,6 +4,13 @@
 
 This documentation provides an overview of the core functionalities implemented in the unlockTx.ts and lockTx.ts files, which are integral to managing blockchain transactions for locking and unlocking assets.
 
+## Deployments
+
+| Chain Name | Deployed Address | Explorer Link |
+|:-----------|:-----------------|:--------------|
+| Cardano Mainnet | addr1wxv5v4jx3xaz4nlgp6j6juw707huauprhfdkst66mlh0fcsn72qrt | https://cardanoscan.io/address/addr1wxv5v4jx3xaz4nlgp6j6juw707huauprhfdkst66mlh0fcsn72qrt
+| Cardano Preprod | addr_test1wzv5v4jx3xaz4nlgp6j6juw707huauprhfdkst66mlh0fcsgk7uvw | https://preprod.cardanoscan.io/address/addr_test1wzv5v4jx3xaz4nlgp6j6juw707huauprhfdkst66mlh0fcsgk7uvw
+
 ## Components
 
 ### unlockTx.ts

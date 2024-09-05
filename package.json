@@ -2,6 +2,11 @@
   "name": "reclaim-plutus",
   "version": "0.1.0",
   "private": true,
+  "license": "See License in <https://github.com/reclaimprotocol/.github/blob/main/LICENSE>",
+  "bugs": {
+		"url": "https://github.com/reclaimprotocol/reclaim-pluts-sdk/issues"
+	},
+	"homepage": "https://github.com/reclaimprotocol/reclaim-pluts-sdk/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

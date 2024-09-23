@@ -1,4 +1,8 @@
-# Reclaim - Pluts SDK
+<div>
+    <div>
+        <img src="https://raw.githubusercontent.com/reclaimprotocol/.github/main/assets/banners/Pluts-SDK.png"  />
+    </div>
+</div>
 
 ## Purpose
 
